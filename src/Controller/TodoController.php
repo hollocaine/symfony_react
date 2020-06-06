@@ -29,21 +29,8 @@ class TodoController extends AbstractController
         $this->entityManager = $entityManager;
         $this->todoRepository = $todoRepository;
     }
-
     /**
-     * @Route("/read", name="todo")
-     */
-    public function index()
-    {
-        $todos = $this->todoRepository->findAll();
-        $arrayToDos = [];
-        foreach ($todos as $todo) {
-            $arrayToDos[] = $todo->toArray();
-        }
-        return $this->json($arrayToDos);
-    }
-    /**
-     * @Route("/create", name="api_todo_create")
+     * @Route("/create", name="api_todo_create", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
@@ -61,4 +48,60 @@ class TodoController extends AbstractController
             //error message
         }
     }
+    /**
+     * @Route("/read", name="api_todo_read", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index()
+    {
+        $todos = $this->todoRepository->findAll();
+        $arrayToDos = [];
+        foreach ($todos as $todo) {
+            $arrayToDos[] = $todo->toArray();
+        }
+        return $this->json($arrayToDos);
+    }
+    /**
+     * @Route("/update/{id}", name="api_todo_update", methods={"PUT"})
+     * @param Request $request
+     * @param Todo  $todo
+     * @return JsonResponse
+     */
+    public function update(Request $request, Todo $todo)
+    {
+        $content = json_decode($request->getContent());
+        $todo = new Todo();
+        $todo->setName($content->name);
+        try {
+            $this->entityManager->flush();
+        } catch (Exception $exception) {
+            //error message
+        }
+        return $this->json([
+            'message' => "Todo has been updated",
+        ]);
+    }
+    /**
+     * @Route("/delete/{id}", name="api_todo_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Todo  $todo
+     * @return JsonResponse
+     */
+    public function delete(Todo $todo)
+    {
+        $content = json_decode($request->getContent());
+        $todo = new Todo();
+        $todo->setName($content->name);
+        try {
+         $this->entityManager->remove($todo);
+            $this->entityManager->flush();
+        } catch (Exception $exception) {
+            //error message
+        }
+        return $this->json([
+               'message' => "Todo has been deleted",
+        ]);
+    }
 }
+   

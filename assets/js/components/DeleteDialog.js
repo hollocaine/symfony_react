@@ -13,14 +13,14 @@ function DeleteDialog(props) {
   };
   const context = useContext(TodoContext);
   return (
-    <Dialog onClose={hide} fullWidth={true} maxWidth="sm" en={props.open}>
+    <Dialog onClose={hide} fullWidth={true} maxWidth="sm" open={props.open}>
       <DialogTitle>Are you sure you wish to delete?</DialogTitle>
       <DialogContent>{props.todo.name}</DialogContent>
       <DialogActions>
         <Button onClick={hide}>Cancel</Button>
         <Button
           onClick={() => {
-            context.deleteTodo({ id: props.todo.id, name: props.todo.name });
+            context.deleteTodo({ id: props.todo.id });
             hide();
           }}
         >
@@ -34,6 +34,6 @@ function DeleteDialog(props) {
 DeleteDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setDeleteConfirmationIsShown: PropTypes.func.isRequired,
-  todo: (PropTypes.shape = { id: PropTypes.number, name: PropTypes.string }),
+  todo: PropTypes.object,
 };
 export default DeleteDialog;

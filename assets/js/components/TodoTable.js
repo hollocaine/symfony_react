@@ -22,9 +22,7 @@ function TodoTable() {
   const [deleteConfirmationIsShown, setDeleteConfirmationIsShown] = useState(
     null
   );
-  const [todoTobeDeleted, setTodoTobeDeleted] = useState(
-      false
-  );
+  const [todoTobeDeleted, setTodoTobeDeleted] = useState(false);
 
   return (
     <Fragment>
@@ -82,8 +80,8 @@ function TodoTable() {
                                 <CloseIcon />
                               </IconButton>
                               <IconButton
-                                onClick={() => {
-                                  context.updateTodo({
+                                onClick={() => {context
+                                  .updateTodo({
                                     id: todo.id,
                                     name: editTodo,
                                   });
@@ -111,7 +109,8 @@ function TodoTable() {
                     </IconButton>
                     <IconButton
                       onClick={() => {
-                        setDeleteConfirmationIsShown(true);setTodoTobeDeleted()
+                        setDeleteConfirmationIsShown(true);
+                        setTodoTobeDeleted(todo);
                       }}
                     >
                       <DeleteIcon />
@@ -123,7 +122,11 @@ function TodoTable() {
         </Table>
       </form>
       {deleteConfirmationIsShown && (
-        <DeleteDialog todo={todoTobeDeleted} open={deleteConfirmationIsShown} setDeleteConfirmationIsShown={setDeleteConfirmationIsShown}/>
+        <DeleteDialog
+          todo={todoTobeDeleted}
+          open={deleteConfirmationIsShown}
+          setDeleteConfirmationIsShown={setDeleteConfirmationIsShown}
+        />
       )}
     </Fragment>
   );
