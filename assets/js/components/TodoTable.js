@@ -123,7 +123,7 @@ function TodoTable() {
         </Table>
       </form>
       {deleteConfirmationIsShown && (
-        <DeleteDialog todo={todoTobeDeleted} open={deleteConfirmationIsShown} setDeleteConfirmationIsShown={setDeleteConfirmationIsShown}/>>
+        <DeleteDialog todo={todoTobeDeleted} open={deleteConfirmationIsShown} setDeleteConfirmationIsShown={setDeleteConfirmationIsShown}/>
       )}
     </Fragment>
   );
