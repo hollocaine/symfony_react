@@ -1,17 +1,39 @@
-import React, { Component, createContext, setState, useState } from 'react';
+import React, {
+  Component,
+  createContext,
+  setState,
+  useState
+} from 'react';
 export const TodoContext = createContext();
 
 class TodoContextProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [
-        { id: 1, name: 'do this' },
-        { id: 2, name: 'do this2' },
-        { id: 3, name: 'do this3' },
-        { id: 4, name: 'do this4' },
-        { id: 5, name: 'do this5' },
-        { id: 6, name: 'do this6' },
+      todos: [{
+          id: 1,
+          name: 'do this'
+        },
+        {
+          id: 2,
+          name: 'do this2'
+        },
+        {
+          id: 3,
+          name: 'do this3'
+        },
+        {
+          id: 4,
+          name: 'do this4'
+        },
+        {
+          id: 5,
+          name: 'do this5'
+        },
+        {
+          id: 6,
+          name: 'do this6'
+        },
       ],
     };
   }
@@ -38,6 +60,7 @@ class TodoContextProvider extends Component {
     });
   }
   //delete
+
   deleteTodo(data) {
     let todos = [...this.state.todos];
     let todo = todos.find((todo) => {
@@ -50,17 +73,19 @@ class TodoContextProvider extends Component {
   }
 
   render() {
-    return (
-      <TodoContext.Provider
-        value={{
+    return ( <
+      TodoContext.Provider value = {
+        {
           ...this.state,
           createTodo: this.createTodo.bind(this),
           updateTodo: this.updateTodo.bind(this),
           deleteTodo: this.deleteTodo.bind(this),
-        }}
-      >
-        {this.props.children}
-      </TodoContext.Provider>
+        }
+      } >
+      {
+        this.props.children
+      } <
+      /TodoContext.Provider>
     );
   }
 }
