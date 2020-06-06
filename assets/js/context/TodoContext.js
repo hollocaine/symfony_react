@@ -43,7 +43,7 @@ class TodoContextProvider extends Component {
   //update
   updateTodo(data) {
     axios
-      .put('/api/todo/update/', +data.id, data)
+      .put('/api/todo/update/' + data.id, data)
       .then((response) => {
         let todos = [...this.state.todos];
         let todo = todos.find((todo) => {
@@ -63,7 +63,7 @@ class TodoContextProvider extends Component {
 
   deleteTodo(data) {
     axios
-      .delete('/api/todo/delete/', +data.id)
+      .delete('/api/todo/delete/' + data.id)
       .then((response) => {
         let todos = [...this.state.todos];
         let todo = todos.find((todo) => {

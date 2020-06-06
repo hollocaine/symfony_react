@@ -71,30 +71,26 @@ class TodoController extends AbstractController
     public function update(Request $request, Todo $todo)
     {
         $content = json_decode($request->getContent());
-        $todo = new Todo();
         $todo->setName($content->name);
         try {
             $this->entityManager->flush();
+             return $this->json([
+            'message' => "Todo has been updated",
+        ]);
         } catch (Exception $exception) {
             //error message
         }
-        return $this->json([
-            'message' => "Todo has been updated",
-        ]);
+       
     }
     /**
      * @Route("/delete/{id}", name="api_todo_delete", methods={"DELETE"})
-     * @param Request $request
      * @param Todo  $todo
      * @return JsonResponse
      */
     public function delete(Todo $todo)
     {
-        $content = json_decode($request->getContent());
-        $todo = new Todo();
-        $todo->setName($content->name);
         try {
-         $this->entityManager->remove($todo);
+            $this->entityManager->remove($todo);
             $this->entityManager->flush();
         } catch (Exception $exception) {
             //error message
