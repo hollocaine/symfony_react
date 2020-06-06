@@ -1,4 +1,4 @@
-import React, { Component, createContext } from 'react';
+import React, { Component, createContext, setState, useState } from 'react';
 export const TodoContext = createContext();
 
 class TodoContextProvider extends Component {
@@ -6,12 +6,12 @@ class TodoContextProvider extends Component {
     super(props);
     this.state = {
       todos: [
-        { name: 'do this' },
-        { name: 'do this2' },
-        { name: 'do this3' },
-        { name: 'do this4' },
-        { name: 'do this5' },
-        { name: 'do this6' },
+        { id: 1, name: 'do this' },
+        { id: 2, name: 'do this2' },
+        { id: 3, name: 'do this3' },
+        { id: 4, name: 'do this4' },
+        { id: 5, name: 'do this5' },
+        { id: 6, name: 'do this6' },
       ],
     };
   }
@@ -27,9 +27,27 @@ class TodoContextProvider extends Component {
   //read
   readTodo() {}
   //update
-  updateTodo() {}
+  updateTodo(data) {
+    let todos = [...this.state.todos];
+    let todo = todos.find((todo) => {
+      return todo.id === data.id;
+    });
+    todo.name = data.name;
+    this.setState({
+      todos,
+    });
+  }
   //delete
-  deleteTodo() {}
+  deleteTodo(data) {
+    let todos = [...this.state.todos];
+    let todo = todos.find((todo) => {
+      return todo.id === data.id;
+    });
+    todos.splice(todos.indexOf(todo), 1);
+    this.setState({
+      todos,
+    });
+  }
 
   render() {
     return (

@@ -1,22 +1,39 @@
 import Dialog from '@material-ui/core/Dialog';
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Dialog } from '@material-ui/core';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import { TodoContext } from '../context/TodoContext';
 
 function DeleteDialog(props) {
+  const hide = () => {
+    props.setDeleteConfirmationIsShown(false);
+  };
+  const context = useContext(TodoContext);
   return (
-    <Dialog open={}>
+    <Dialog onClose={hide} fullWidth={true} maxWidth="sm" en={props.open}>
       <DialogTitle>Are you sure you wish to delete?</DialogTitle>
-      <DialogContent>//task</DialogContent>
+      <DialogContent>{props.todo.name}</DialogContent>
       <DialogActions>
-        <Button>Cancel</Button>
-        <Button>Delete</Button>
+        <Button onClick={hide}>Cancel</Button>
+        <Button
+          onClick={() => {
+            context.deleteTodo({ id: props.todo.id, name: props.todo.name });
+            hide();
+          }}
+        >
+          Delete
+        </Button>
       </DialogActions>
     </Dialog>
   );
 }
 
-DeleteDialog.PropTypes = {
+DeleteDialog.propTypes = {
   open: PropTypes.bool.isRequired,
+  setDeleteConfirmationIsShown: PropTypes.func.isRequired,
+  todo: (PropTypes.shape = { id: PropTypes.number, name: PropTypes.string }),
 };
 export default DeleteDialog;
